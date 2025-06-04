@@ -79,6 +79,8 @@ This repository follows a modular structure:
 - `data/` contains `raw/`, `interim/`, and `processed/` data tiers.
 - `src/` hosts ingestion, feature engineering, modeling, and pipeline modules.
 - `tests/` includes the test suite.
+- Specialized ingestion utilities validate schemas for multiple dataset types.
+- RFM feature helper computes recency, frequency, and monetary metrics.
 
 Feel free to expand each section with your own implementation details.
 
