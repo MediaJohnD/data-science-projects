@@ -6,7 +6,7 @@ This document outlines the system architecture for Fringe Audience AI.
 
 1. **Ingestion** – Raw CSV files are loaded via the ingestion module.
 2. **Feature Engineering** – Numerical fields are scaled, categorical fields are one-hot encoded, and a training matrix is produced.
-3. **Modeling** – An XGBoost classifier is trained with cross-validation and optional hyperparameter tuning. Evaluation metrics such as accuracy and ROC AUC are reported.
+3. **Modeling** – The system supports multiple algorithms including XGBoost, KNN, Random Forest, DBSCAN clustering, Isolation Forest, autoencoders, and RNNs. Cross-validation and grid search are applied where appropriate and metrics such as accuracy and ROC AUC are reported.
 4. **Deployment** – Trained models can be served via FastAPI for real-time scoring. MLflow tracks experiments and stores model artifacts.
 
 ## Deployment Steps

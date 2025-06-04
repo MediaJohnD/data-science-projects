@@ -6,3 +6,4 @@ xgboost
 prefect
 pytest
 pandas
+tensorflow-cpu==2.15.0

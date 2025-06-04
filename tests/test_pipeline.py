@@ -8,9 +8,9 @@ def test_run_pipeline(tmp_path):
         'data_path': str(data_path),
         'target_column': 'target',
         'model_path': str(tmp_path / 'model.joblib'),
-        'param_grid': {
-            'max_depth': [3],
-            'subsample': [1.0]
+        'model': {
+            'type': 'knn',
+            'n_neighbors': 1
         },
         'cv': 2
     }

@@ -67,9 +67,9 @@ make run       # Run full pipeline
 ```
 
 The default pipeline loads a CSV dataset, performs feature scaling and one-hot
-encoding, then trains an XGBoost model using cross-validation and hyperparameter
-tuning. Results are printed to the console and the trained model artifact is
-stored on disk.
+encoding, then trains a model of your choice using cross-validation and
+hyperparameter tuning where applicable. Results are printed to the console and
+the trained model artifact is stored on disk.
 
 ---
 
@@ -99,10 +99,22 @@ The trained model will be saved to `model.joblib` (or the path specified in the 
 ### Configuration
 
 `configs/default_config.yaml` contains example parameters for the pipeline and
-the XGBoost model, including an optional hyperparameter grid for cross
+the model, including an optional hyperparameter grid for cross
 validation. You can pass your own configuration dictionary to
 `run_pipeline()` or edit this file when integrating with orchestration tools
 like Prefect or Airflow.
+
+### Model Types
+
+Set `model.type` in the configuration to switch algorithms. Supported values:
+
+- `xgboost` – gradient boosted trees with optional grid search (default)
+- `knn` – K‑Nearest Neighbors classifier
+- `random_forest` – ensemble of decision trees
+- `dbscan` – density-based clustering
+- `isolation_forest` – anomaly detection
+- `autoencoder` – neural-network-based dimensionality reduction
+- `rnn` – sequence modeling with an LSTM network
 
 ## Testing
 
