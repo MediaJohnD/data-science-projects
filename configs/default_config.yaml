@@ -1,0 +1,15 @@
+# Default configuration for Fringe Audience AI
+
+pipeline:
+  batch_size: 32
+  num_epochs: 10
+
+model:
+  type: xgboost
+  params:
+    learning_rate: 0.1
+    n_estimators: 100
+  param_grid:
+    max_depth: [3, 5]
+    subsample: [0.8, 1.0]
+cv: 5
