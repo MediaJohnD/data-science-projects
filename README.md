@@ -112,3 +112,7 @@ pytest -q
 
 This runs unit tests covering ingestion, feature generation, model training, and
 the overall pipeline to ensure everything works end to end.
+
+## License
+
+This project and its code are proprietary to AiOpti. All rights are reserved. Redistribution or use in source or binary form, with or without modification, is prohibited without express written permission from AiOpti.
