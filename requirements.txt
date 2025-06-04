@@ -3,6 +3,7 @@ mlflow
 pydantic
 scikit-learn
 xgboost
+shap
 prefect
 pytest
 pandas

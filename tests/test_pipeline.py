@@ -8,6 +8,7 @@ def test_run_pipeline(tmp_path):
         'data_path': str(data_path),
         'target_column': 'target',
         'model_path': str(tmp_path / 'model.joblib'),
+        'metrics_path': str(tmp_path / 'metrics.json'),
         'model': {
             'type': 'knn',
             'n_neighbors': 1
@@ -16,3 +17,4 @@ def test_run_pipeline(tmp_path):
     }
     run_pipeline(config)
     assert (tmp_path / 'model.joblib').exists()
+    assert (tmp_path / 'metrics.json').exists()

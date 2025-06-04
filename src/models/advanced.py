@@ -9,6 +9,7 @@ from sklearn.cluster import DBSCAN
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier, IsolationForest
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
 try:
     from tensorflow import keras
@@ -27,11 +28,45 @@ def train_knn_classifier(X: np.ndarray, y: np.ndarray, n_neighbors: int = 5) -> 
     return model
 
 
+def train_knn_classifier_cv(
+    X: np.ndarray,
+    y: np.ndarray,
+    param_grid: dict | None = None,
+    cv: int = 5,
+) -> tuple[KNeighborsClassifier, dict | None, float | None]:
+    """Train KNN with optional grid search CV."""
+    base = KNeighborsClassifier()
+    if param_grid:
+        cv_strategy = StratifiedKFold(n_splits=cv, shuffle=True, random_state=42)
+        search = GridSearchCV(base, param_grid, scoring="roc_auc", cv=cv_strategy)
+        search.fit(X, y)
+        return search.best_estimator_, search.best_params_, search.best_score_
+    base.fit(X, y)
+    return base, None, None
+
+
 def train_random_forest(X: np.ndarray, y: np.ndarray, **kwargs) -> RandomForestClassifier:
     """Train a Random Forest classifier."""
     model = RandomForestClassifier(**kwargs)
     model.fit(X, y)
     return model
+
+
+def train_random_forest_cv(
+    X: np.ndarray,
+    y: np.ndarray,
+    param_grid: dict | None = None,
+    cv: int = 5,
+) -> tuple[RandomForestClassifier, dict | None, float | None]:
+    """Train RandomForest with optional grid search."""
+    base = RandomForestClassifier()
+    if param_grid:
+        cv_strategy = StratifiedKFold(n_splits=cv, shuffle=True, random_state=42)
+        search = GridSearchCV(base, param_grid, scoring="roc_auc", cv=cv_strategy)
+        search.fit(X, y)
+        return search.best_estimator_, search.best_params_, search.best_score_
+    base.fit(X, y)
+    return base, None, None
 
 
 # -------------------------- Unsupervised Models --------------------------
@@ -41,6 +76,36 @@ def train_dbscan(X: np.ndarray, eps: float = 0.5, min_samples: int = 5) -> DBSCA
     model = DBSCAN(eps=eps, min_samples=min_samples)
     model.fit(X)
     return model
+
+
+def train_dbscan_cv(
+    X: np.ndarray,
+    param_grid: dict | None = None,
+) -> tuple[DBSCAN, dict | None, float | None]:
+    """Simple grid search for DBSCAN using silhouette score."""
+    if not param_grid:
+        model = DBSCAN()
+        model.fit(X)
+        return model, None, None
+
+    best_model = None
+    best_score = -np.inf
+    best_params = None
+    for eps in param_grid.get("eps", [0.5]):
+        for min_samples in param_grid.get("min_samples", [5]):
+            model = DBSCAN(eps=eps, min_samples=min_samples)
+            labels = model.fit_predict(X)
+            if len(set(labels)) > 1:
+                from sklearn.metrics import silhouette_score
+
+                score = silhouette_score(X, labels)
+            else:
+                score = -1
+            if score > best_score:
+                best_score = score
+                best_params = {"eps": eps, "min_samples": min_samples}
+                best_model = model
+    return best_model, best_params, best_score
 
 
 def train_isolation_forest(X: np.ndarray, **kwargs) -> IsolationForest:
