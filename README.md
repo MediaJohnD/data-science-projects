@@ -37,9 +37,13 @@ export MLFLOW_TRACKING_URI=http://localhost:5000  # optional
 python -m src.pipeline  # MODEL_ALGORITHM can override the default model
 ```
 
-Install the project requirements before running the pipeline:
+Create and activate a Python virtual environment before installing the
+requirements:
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 

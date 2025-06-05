@@ -12,9 +12,13 @@ identify significant distribution changes.
 Use `python -m src.pipeline` to run the pipeline locally. Set
 `MLFLOW_TRACKING_URI` to point at your tracking server if necessary.
 
-Install the required packages with:
+Create and activate a Python virtual environment, then install the required
+packages:
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
