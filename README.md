@@ -81,6 +81,10 @@ git push -u origin main
 git remote -v  # verify
 ```
 
+After running these commands, confirm that both **fetch** and **push** URLs
+point to `https://github.com/MediaJohnD/data-science-projects.git` by using
+`git remote -v`. This ensures CI/CD pipelines will operate correctly.
+
 After cloning the repository you can confirm the configuration with:
 
 ```bash
