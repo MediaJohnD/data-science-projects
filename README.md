@@ -18,11 +18,12 @@ See [docs/architecture.md](docs/architecture.md) for a detailed design overview.
 - Robust feature scaling and categorical encoding via `RobustScaler` and
   `OneHotEncoder`.
 - Time series feature engineering (recency, frequency, rolling averages).
-- Multiple clustering algorithms (DBSCAN, K-Means, Agglomerative) and
-  dimensionality reduction (PCA, t-SNE, UMAP).
+- Optional utilities provide clustering algorithms (DBSCAN, K-Means,
+  Agglomerative) and dimensionality reduction (PCA, t-SNE, UMAP).
 - Supervised models including XGBoost, LightGBM, CatBoost, Random Forest,
   and Logistic Regression with MLflow experiment tracking.
-- Anomaly detection modules (Isolation Forest, One-Class SVM, Autoencoders).
+- Optional anomaly detection modules (Isolation Forest, One-Class SVM,
+  Autoencoders).
 - Model explainability through SHAP.
 
 ## Running Locally

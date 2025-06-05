@@ -4,8 +4,8 @@ This project demonstrates a production-oriented machine learning workflow. It
 follows an **FTI** (Feature, Training, Inference) architecture with Prefect
 flows orchestrating each stage. External data ingestion with schema validation,
 hyperparameter tuning via Optuna, and MLflow tracking are all supported.
-Unsupervised clustering and anomaly detection modules allow audience discovery,
-while multiple supervised models can be trained and compared. A
+Optional clustering and anomaly detection modules are available for exploratory
+analysis, while multiple supervised models can be trained and compared. A
 drift detection module monitors incoming data against a saved baseline to
 identify significant distribution changes.
 

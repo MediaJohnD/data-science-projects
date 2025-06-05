@@ -13,6 +13,5 @@
 - Unsupervised clustering and anomaly detection modules
 - Additional supervised algorithms with MLflow logging
 - SHAP-based explainability utilities
-### Removed
-- Docker and containerization artifacts
+- Documentation cleaned and aligned with codebase
 
