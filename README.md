@@ -107,5 +107,10 @@ cd data-science-projects
 git remote -v
 ```
 
+You can also run the helper script `scripts/configure_remote.sh` to
+automatically add the HTTPS remote if it has not been configured. Because
+remotes are not persisted across ephemeral environments, execute this script at
+the start of each new session to ensure pushes and pulls work as expected.
+
 Continuous integration is provided via a GitHub Actions workflow defined in
 `.github/workflows/ci.yml`.
