@@ -1,6 +1,8 @@
 # Documentation
 
-This directory contains project documentation and diagrams.
+This directory contains additional documentation and diagrams.
 
-- `architecture.md` describes the overall project structure.
-- `../configs/system_diagram.png` shows a high level system diagram.
+- `architecture.md` explains how the modules relate to one another.
+- `../configs/system_diagram.png` shows a high‑level system diagram.
+- The main repository `README.md` describes how to run the tests and scoring
+  service.

@@ -1,8 +1,8 @@
 # Data Science Projects
 
-This repository contains a small set of modules illustrating a typical data
-science workflow. The code is intentionally simple and serves as a starting
-point for further experimentation.
+This repository contains a collection of simple modules that showcase a
+lightweight data science workflow.  Each module is intentionally small so the
+repository can be used as a starting point for experiments or tutorials.
 
 ## Project Structure
 
@@ -15,8 +15,26 @@ point for further experimentation.
 - `src/contextual_triggers` – lightweight event trigger logic.
 - `docs` – additional documentation.
 
-Run the unit tests with:
+### Running the tests
+
+Install the dependencies and execute the test suite:
 
 ```bash
 pytest -q
+```
+
+### Launch the scoring service
+
+The `scoring` module exposes a very small FastAPI application.  You can run it
+locally after installing the requirements:
+
+```bash
+uvicorn src.scoring.api:app --reload
+```
+
+Alternatively, build the provided Docker image:
+
+```bash
+docker build -t scoring-service ./docker
+docker run -p 8000:8000 scoring-service
 ```
