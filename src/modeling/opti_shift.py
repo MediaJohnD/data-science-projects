@@ -1,7 +1,13 @@
 import joblib
 import optuna
 import xgboost as xgb
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score,
+)
 from sklearn.model_selection import train_test_split
 import mlflow
 
@@ -49,11 +55,22 @@ def train_model(X_train, y_train):
 
 
 def evaluate_model(model, X_test, y_test):
-    """Return accuracy for the given model."""
+    """Return evaluation metrics for the given model."""
     preds = model.predict(X_test)
-    accuracy = accuracy_score(y_test, preds)
-    mlflow.log_metric("accuracy", accuracy)
-    return accuracy
+    proba = model.predict_proba(X_test)[:, 1]
+
+    metrics = {
+        "accuracy": accuracy_score(y_test, preds),
+        "precision": precision_score(y_test, preds),
+        "recall": recall_score(y_test, preds),
+        "f1": f1_score(y_test, preds),
+        "roc_auc": roc_auc_score(y_test, proba),
+    }
+
+    for name, value in metrics.items():
+        mlflow.log_metric(name, value)
+
+    return metrics
 
 
 def save_model(model, path: str):

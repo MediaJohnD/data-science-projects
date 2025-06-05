@@ -26,9 +26,7 @@ jobs:
       - name: Lint
         run: flake8 src tests
       - name: Run tests
-        run: pytest -q
-      - name: Build Docker image
-        run: docker build -t dspipeline-api -f docker/Dockerfile .
+        run: pytest --cov=src -q
       - name: Run pipeline with sample data
         env:
           MLFLOW_TRACKING_URI: http://localhost:5000

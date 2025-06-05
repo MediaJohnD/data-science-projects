@@ -2,14 +2,13 @@
 
 ![CI](https://github.com/MediaJohnD/data-science-projects/actions/workflows/ci.yml/badge.svg)
 
-This repository contains an end-to-end machine learning pipeline with
-deployment automation. The project follows an **FTI** (Feature, Training,
-Inference) architecture so that each stage can be orchestrated and scaled
-independently. The code demonstrates how to ingest data from external sources,
-validate schemas, engineer features, train and tune a model while tracking
-experiments with MLflow, and expose predictions via a FastAPI service.
-Deployment can be automated using the provided `deploy.sh` script or via the
-included GitHub Actions workflow.
+This repository contains an end-to-end machine learning pipeline. The project
+follows an **FTI** (Feature, Training, Inference) architecture so that each
+stage can be orchestrated and scaled independently. The code demonstrates how
+to ingest data from external sources, validate schemas, engineer features,
+train and tune a model while tracking experiments with MLflow, and expose
+predictions via a FastAPI service. Continuous integration is handled through
+the included GitHub Actions workflow.
 The pipeline also detects data drift using a Kolmogorov-Smirnov test and logs
 the statistic for monitoring.
 See [docs/architecture.md](docs/architecture.md) for a detailed design overview.
@@ -25,21 +24,22 @@ export MLFLOW_TRACKING_URI=http://localhost:5000  # optional
 python -m src.pipeline
 ```
 
-## Running with Docker
+### Environment Configuration
 
-```bash
-cd docker
-docker-compose up --build
-```
+Sample environment files for local, staging, and production deployments are
+located in the `prefect/envs/` directory. Adjust the values as needed and load
+them before running or scheduling the pipeline.
 
 ## Scheduling
 
 The pipeline is packaged with a Prefect deployment that schedules a daily run.
-Configure a Prefect API and register the deployment:
+Configure a Prefect API and register the deployment using the provided
+configuration:
 
 ```bash
-prefect deployment build src/pipeline.py:run_pipeline -n daily-fti
-prefect deployment apply run_pipeline-deployment.yaml
+prefect deployment build src/pipeline.py:run_pipeline -n daily-fti \
+  -o prefect/deployments/run_pipeline.yaml
+prefect deployment apply prefect/deployments/run_pipeline.yaml
 ```
 The schedule can be customized in `src/pipeline.py`.
 

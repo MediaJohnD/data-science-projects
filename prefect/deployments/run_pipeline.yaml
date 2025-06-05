@@ -1,0 +1,9 @@
+name: daily-fti
+schedule:
+  cron: "0 2 * * *"
+  timezone: "UTC"
+flow_name: fti-pipeline
+entrypoint: src/pipeline.py:run_pipeline
+work_pool:
+  name: local
+  work_queue_name: default

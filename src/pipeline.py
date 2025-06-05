@@ -53,15 +53,15 @@ def training_flow(X_train, y_train):
 @flow
 def inference_flow(model, X_test, y_test):
     """Inference and evaluation stage."""
-    accuracy = eval_task(model, X_test, y_test)
-    log_accuracy(accuracy)
+    metrics = eval_task(model, X_test, y_test)
+    log_accuracy(metrics["accuracy"])
     drift_stat, drift = monitor_drift(X_test)
     print(f"Drift statistic: {drift_stat:.3f}")
-    if should_trigger_retrain(accuracy) or drift:
+    if should_trigger_retrain(metrics["accuracy"]) or drift:
         print("Retraining recommended.")
     else:
         print("Model performance acceptable.")
-    return accuracy
+    return metrics
 
 
 @flow(name="fti-pipeline", log_prints=True, timeout_seconds=3600)
@@ -69,13 +69,15 @@ def run_pipeline(path: str | None = None):
     """Execute the full Feature-Training-Inference pipeline."""
     X_train, X_test, y_train, y_test, _ = feature_flow(path)
     model = training_flow(X_train, y_train)
-    accuracy = inference_flow(model, X_test, y_test)
+    metrics = inference_flow(model, X_test, y_test)
     try:
         notifier = AppriseNotificationBlock.load("default")
-        notifier.notify(f"Pipeline completed with accuracy: {accuracy:.3f}")
+        notifier.notify(
+            f"Pipeline completed with accuracy: {metrics['accuracy']:.3f}"
+        )
     except Exception:
         print("Notification block not configured")
-    return accuracy
+    return metrics
 
 
 if __name__ == "__main__":

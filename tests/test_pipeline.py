@@ -7,6 +7,6 @@ from src.pipeline import run_pipeline  # noqa: E402
 
 
 def test_run_pipeline():
-    # Ensure pipeline runs without raising errors and returns accuracy
-    acc = run_pipeline()
-    assert acc > 0.9
+    """Ensure pipeline runs without errors and returns evaluation metrics."""
+    metrics = run_pipeline()
+    assert metrics["accuracy"] > 0.9
