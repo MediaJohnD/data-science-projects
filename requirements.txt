@@ -1,6 +1,6 @@
 fastapi
+httpx<0.28
 uvicorn
-xgboost
 scikit-learn
 pandas
 numpy
