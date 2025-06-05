@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 Refer to the project [README](../README.md) for instructions on configuring the
 GitHub remote (`https://github.com/MediaJohnD/data-science-projects.git`) and
-running the CI pipeline.
+verifying it with `git remote -v` before running the CI pipeline.
 
 Prefect deployments can schedule the pipeline to run automatically every day.
 An example deployment configuration is provided in

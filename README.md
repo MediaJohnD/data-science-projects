@@ -81,6 +81,12 @@ git push -u origin main
 git remote -v  # verify
 ```
 
+After cloning the repository you can confirm the configuration with:
+
+```bash
+git remote -v
+```
+
 ### SSH
 
 ```bash
