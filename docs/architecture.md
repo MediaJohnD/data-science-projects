@@ -1,6 +1,7 @@
 # Architecture Overview
 
-The pipeline orchestrates the following steps:
+The pipeline follows an **FTI** (Feature, Training, Inference) design. Prefect
+flows orchestrate the following stages:
 
 1. **Ingestion** – Load data from local files, URLs, or S3 buckets, validate
    the schema with Pandera, and store raw data for reproducibility.

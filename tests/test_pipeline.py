@@ -3,7 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.pipeline import run_pipeline
+from src.pipeline import run_pipeline  # noqa: E402
 
 
 def test_run_pipeline():

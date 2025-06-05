@@ -3,9 +3,8 @@
 import os
 import pandas as pd
 from sklearn.datasets import load_breast_cancer
-import pandera as pa
 from pandera import Column, DataFrameSchema
-import s3fs
+
 
 def _validate(df: pd.DataFrame) -> pd.DataFrame:
     """Validate the dataframe schema."""
