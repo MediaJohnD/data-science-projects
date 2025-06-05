@@ -1,5 +1,7 @@
 # Data Science Projects
 
+![CI](https://github.com/MediaJohnD/data-science-projects/actions/workflows/ci.yml/badge.svg)
+
 This repository contains an end-to-end machine learning pipeline with
 deployment automation. The project follows an **FTI** (Feature, Training,
 Inference) architecture so that each stage can be orchestrated and scaled
@@ -8,6 +10,8 @@ validate schemas, engineer features, train and tune a model while tracking
 experiments with MLflow, and expose predictions via a FastAPI service.
 Deployment can be automated using the provided `deploy.sh` script or via the
 included GitHub Actions workflow.
+The pipeline also detects data drift using a Kolmogorov-Smirnov test and logs
+the statistic for monitoring.
 See [docs/architecture.md](docs/architecture.md) for a detailed design overview.
 
 ## Running Locally

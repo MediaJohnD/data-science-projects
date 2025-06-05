@@ -7,6 +7,7 @@ from src.ingestion.load_data import load_data
 from src.features.engineer_features import split_and_scale
 from src.modeling.opti_shift import train_model, evaluate_model, save_model
 from src.monitoring.log_metrics import log_accuracy
+from src.monitoring.drift_detection import monitor_drift
 from src.contextual_triggers.trigger_engine import should_trigger_retrain
 
 
@@ -54,7 +55,9 @@ def inference_flow(model, X_test, y_test):
     """Inference and evaluation stage."""
     accuracy = eval_task(model, X_test, y_test)
     log_accuracy(accuracy)
-    if should_trigger_retrain(accuracy):
+    drift_stat, drift = monitor_drift(X_test)
+    print(f"Drift statistic: {drift_stat:.3f}")
+    if should_trigger_retrain(accuracy) or drift:
         print("Retraining recommended.")
     else:
         print("Model performance acceptable.")
