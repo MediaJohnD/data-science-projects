@@ -42,6 +42,7 @@ def tune_hyperparameters(X_train, y_train):
 def train_model(X_train, y_train):
     """Train an XGBoost model with hyperparameter tuning and MLflow tracking."""
     params = tune_hyperparameters(X_train, y_train)
+    mlflow.end_run()
     with mlflow.start_run():
         mlflow.log_params(params)
         model = xgb.XGBClassifier(
@@ -49,8 +50,11 @@ def train_model(X_train, y_train):
         )
         model.fit(X_train, y_train)
         mlflow.sklearn.log_model(model, "model")
-        mlflow.register_model("runs:/{}/model".format(mlflow.active_run().info.run_id),
-                              "dspipeline")
+        mlflow.register_model(
+            f"runs:/{mlflow.active_run().info.run_id}/model",
+            "dspipeline",
+        )
+    mlflow.end_run()
     return model
 
 

@@ -12,6 +12,12 @@ identify significant distribution changes.
 Use `python -m src.pipeline` to run the pipeline locally. Set
 `MLFLOW_TRACKING_URI` to point at your tracking server if necessary.
 
+Install the required packages with:
+
+```bash
+pip install -r requirements.txt
+```
+
 Refer to the project [README](../README.md) for instructions on configuring the
 GitHub remote (`https://github.com/MediaJohnD/data-science-projects.git`) and
 running the CI pipeline.

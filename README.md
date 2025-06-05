@@ -37,6 +37,12 @@ export MLFLOW_TRACKING_URI=http://localhost:5000  # optional
 python -m src.pipeline  # MODEL_ALGORITHM can override the default model
 ```
 
+Install the project requirements before running the pipeline:
+
+```bash
+pip install -r requirements.txt
+```
+
 ### Environment Configuration
 
 Sample environment files for local, staging, and production deployments are

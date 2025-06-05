@@ -25,9 +25,11 @@ def train_model(X_train, y_train, algorithm="xgboost"):
     else:
         raise ValueError(f"Unknown algorithm: {algorithm}")
 
+    mlflow.end_run()
     with mlflow.start_run():
         model.fit(X_train, y_train)
         mlflow.sklearn.log_model(model, "model")
+    mlflow.end_run()
     return model
 
 
