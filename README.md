@@ -8,6 +8,7 @@ validate schemas, engineer features, train and tune a model while tracking
 experiments with MLflow, and expose predictions via a FastAPI service.
 Deployment can be automated using the provided `deploy.sh` script or via the
 included GitHub Actions workflow.
+See [docs/architecture.md](docs/architecture.md) for a detailed design overview.
 
 ## Running Locally
 
@@ -27,17 +28,29 @@ cd docker
 docker-compose up --build
 ```
 
+## Scheduling
+
+The pipeline is packaged with a Prefect deployment that schedules a daily run.
+Configure a Prefect API and register the deployment:
+
+```bash
+prefect deployment build src/pipeline.py:run_pipeline -n daily-fti
+prefect deployment apply run_pipeline-deployment.yaml
+```
+The schedule can be customized in `src/pipeline.py`.
+
 ## GitHub Remote
 
 The project does not ship with a Git remote configured. To collaborate and
 enable CI/CD you should connect it to your own GitHub repository. Use one of
-the following commands to add a remote:
+the following commands to add a remote and verify it:
 
 ### HTTPS
 
 ```bash
 git remote add origin https://github.com/MediaJohnD/data-science-projects.git
 git push -u origin main
+git remote -v  # verify
 ```
 
 ### SSH
@@ -45,12 +58,15 @@ git push -u origin main
 ```bash
 git remote add origin git@github.com:MediaJohnD/data-science-projects.git
 git push -u origin main
+git remote -v  # verify
 ```
 
 ### GitHub CLI
 
 ```bash
 gh repo clone MediaJohnD/data-science-projects
+cd data-science-projects
+git remote -v
 ```
 
 Continuous integration is provided via a GitHub Actions workflow defined in

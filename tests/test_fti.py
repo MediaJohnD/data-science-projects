@@ -10,4 +10,4 @@ def test_fti_flow():
     X_train, X_test, y_train, y_test, _ = feature_flow()
     model = training_flow(X_train, y_train)
     acc = inference_flow(model, X_test, y_test)
-    assert acc > 0
+    assert acc > 0.9

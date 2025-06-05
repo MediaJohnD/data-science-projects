@@ -1,6 +1,7 @@
 """Prefect flows implementing an FTI (Feature-Training-Inference) pipeline."""
 
 from prefect import flow, task
+from prefect.blocks.notifications import AppriseNotificationBlock
 
 from src.ingestion.load_data import load_data
 from src.features.engineer_features import split_and_scale
@@ -9,25 +10,25 @@ from src.monitoring.log_metrics import log_accuracy
 from src.contextual_triggers.trigger_engine import should_trigger_retrain
 
 
-@task
+@task(retries=2, retry_delay_seconds=30)
 def ingestion_task(path: str | None = None):
     """Load and validate raw data."""
     return load_data(path)
 
 
-@task
+@task(retries=2, retry_delay_seconds=30)
 def feature_task(df):
     """Perform feature engineering."""
     return split_and_scale(df)
 
 
-@task
+@task(retries=2, retry_delay_seconds=30)
 def train_task(X_train, y_train):
     """Train a model with hyperparameter tuning."""
     return train_model(X_train, y_train)
 
 
-@task
+@task(retries=2, retry_delay_seconds=30)
 def eval_task(model, X_test, y_test):
     """Evaluate the trained model."""
     return evaluate_model(model, X_test, y_test)
@@ -60,12 +61,17 @@ def inference_flow(model, X_test, y_test):
     return accuracy
 
 
-@flow
+@flow(name="fti-pipeline", log_prints=True, timeout_seconds=3600)
 def run_pipeline(path: str | None = None):
     """Execute the full Feature-Training-Inference pipeline."""
     X_train, X_test, y_train, y_test, _ = feature_flow(path)
     model = training_flow(X_train, y_train)
     accuracy = inference_flow(model, X_test, y_test)
+    try:
+        notifier = AppriseNotificationBlock.load("default")
+        notifier.notify(f"Pipeline completed with accuracy: {accuracy:.3f}")
+    except Exception:
+        print("Notification block not configured")
     return accuracy
 
 

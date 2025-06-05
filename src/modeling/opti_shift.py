@@ -43,6 +43,8 @@ def train_model(X_train, y_train):
         )
         model.fit(X_train, y_train)
         mlflow.sklearn.log_model(model, "model")
+        mlflow.register_model("runs:/{}/model".format(mlflow.active_run().info.run_id),
+                              "dspipeline")
     return model
 
 

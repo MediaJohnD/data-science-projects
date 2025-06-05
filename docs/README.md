@@ -11,3 +11,8 @@ Use `python -m src.pipeline` to run the pipeline locally. Set
 
 A `Dockerfile` and `docker-compose.yml` are provided to deploy the API in a
 containerized environment.
+
+Refer to the project [README](../README.md) for instructions on configuring a
+GitHub remote and running the CI pipeline.
+
+Prefect deployments can schedule the pipeline to run automatically every day.

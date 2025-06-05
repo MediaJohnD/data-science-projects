@@ -14,10 +14,23 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Lint
         run: flake8 src tests
       - name: Run tests
         run: pytest -q
+      - name: Build Docker image
+        run: docker build -t dspipeline-api -f docker/Dockerfile .
+      - name: Run pipeline with sample data
+        env:
+          MLFLOW_TRACKING_URI: http://localhost:5000
+        run: python -m src.pipeline
 
