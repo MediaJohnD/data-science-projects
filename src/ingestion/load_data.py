@@ -5,6 +5,7 @@ import pandas as pd
 from sklearn.datasets import load_breast_cancer
 import pandera as pa
 from pandera import Column, DataFrameSchema
+import s3fs
 
 def _validate(df: pd.DataFrame) -> pd.DataFrame:
     """Validate the dataframe schema."""
@@ -16,7 +17,9 @@ def load_data(path: str | None = None) -> pd.DataFrame:
     """Load data from the given path or built-in dataset."""
     # Path can be provided directly or via the DATA_PATH environment variable
     path = path or os.getenv("DATA_PATH")
-    if path:
+    if path and path.startswith("s3://"):
+        df = pd.read_csv(path, storage_options={"anon": False})
+    elif path:
         df = pd.read_csv(path)
     else:
         data = load_breast_cancer(as_frame=True)

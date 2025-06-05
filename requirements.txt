@@ -9,3 +9,4 @@ pandera
 mlflow
 optuna
 s3fs
+prefect
