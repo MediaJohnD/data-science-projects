@@ -12,3 +12,9 @@ s3fs
 prefect
 flake8
 scipy
+lightgbm
+catboost
+shap
+lime
+umap-learn
+imbalanced-learn

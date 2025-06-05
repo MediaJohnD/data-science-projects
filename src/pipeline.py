@@ -5,7 +5,11 @@ from prefect.blocks.notifications import AppriseNotificationBlock
 
 from src.ingestion.load_data import load_data
 from src.features.engineer_features import split_and_scale
-from src.modeling.opti_shift import train_model, evaluate_model, save_model
+from src.modeling.supervised_models import (
+    train_model,
+    evaluate_model,
+    save_model,
+)
 from src.monitoring.log_metrics import log_accuracy
 from src.monitoring.drift_detection import monitor_drift
 from src.contextual_triggers.trigger_engine import should_trigger_retrain
@@ -24,9 +28,9 @@ def feature_task(df):
 
 
 @task(retries=2, retry_delay_seconds=30)
-def train_task(X_train, y_train):
-    """Train a model with hyperparameter tuning."""
-    return train_model(X_train, y_train)
+def train_task(X_train, y_train, algorithm: str = "xgboost"):
+    """Train a model using the specified algorithm."""
+    return train_model(X_train, y_train, algorithm=algorithm)
 
 
 @task(retries=2, retry_delay_seconds=30)
@@ -43,9 +47,9 @@ def feature_flow(path: str | None = None):
 
 
 @flow
-def training_flow(X_train, y_train):
+def training_flow(X_train, y_train, algorithm: str = "xgboost"):
     """Training stage."""
-    model = train_task(X_train, y_train)
+    model = train_task(X_train, y_train, algorithm)
     save_model(model, "model.joblib")
     return model
 
@@ -65,10 +69,10 @@ def inference_flow(model, X_test, y_test):
 
 
 @flow(name="fti-pipeline", log_prints=True, timeout_seconds=3600)
-def run_pipeline(path: str | None = None):
+def run_pipeline(path: str | None = None, algorithm: str = "xgboost"):
     """Execute the full Feature-Training-Inference pipeline."""
     X_train, X_test, y_train, y_test, _ = feature_flow(path)
-    model = training_flow(X_train, y_train)
+    model = training_flow(X_train, y_train, algorithm)
     metrics = inference_flow(model, X_test, y_test)
     try:
         notifier = AppriseNotificationBlock.load("default")
@@ -81,4 +85,7 @@ def run_pipeline(path: str | None = None):
 
 
 if __name__ == "__main__":
-    run_pipeline()
+    import os
+
+    algo = os.getenv("MODEL_ALGORITHM", "xgboost")
+    run_pipeline(algorithm=algo)

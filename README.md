@@ -13,6 +13,18 @@ The pipeline also detects data drift using a Kolmogorov-Smirnov test and logs
 the statistic for monitoring.
 See [docs/architecture.md](docs/architecture.md) for a detailed design overview.
 
+## Features
+
+- Robust feature scaling and categorical encoding via `RobustScaler` and
+  `OneHotEncoder`.
+- Time series feature engineering (recency, frequency, rolling averages).
+- Multiple clustering algorithms (DBSCAN, K-Means, Agglomerative) and
+  dimensionality reduction (PCA, t-SNE, UMAP).
+- Supervised models including XGBoost, LightGBM, CatBoost, Random Forest,
+  and Logistic Regression with MLflow experiment tracking.
+- Anomaly detection modules (Isolation Forest, One-Class SVM, Autoencoders).
+- Model explainability through SHAP.
+
 ## Running Locally
 
 The pipeline is orchestrated with [Prefect](https://docs.prefect.io/) and uses
@@ -21,7 +33,7 @@ specify the tracking server if desired and execute:
 
 ```bash
 export MLFLOW_TRACKING_URI=http://localhost:5000  # optional
-python -m src.pipeline
+python -m src.pipeline  # MODEL_ALGORITHM can override the default model
 ```
 
 ### Environment Configuration
