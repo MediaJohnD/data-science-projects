@@ -48,5 +48,5 @@ Run the end-to-end flow locally:
 python src/pipeline.py
 ```
 
-The repository includes GitHub Actions workflows for linting and running the unit tests.
+
 
