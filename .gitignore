@@ -1,0 +1,16 @@
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# Data and logs
+*.log
+*.csv
+*.parquet
+
+# Environment files
+.env
+
+# Jupyter notebooks
+.ipynb_checkpoints/
