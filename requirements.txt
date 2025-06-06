@@ -1,7 +1,5 @@
-fastapi
-uvicorn
-xgboost
-scikit-learn
-pandas
-numpy
-prefect
+fastapi>=0.110
+uvicorn>=0.27
+prefect>=2.13
+pandas>=2.0
+scikit-learn>=1.3
