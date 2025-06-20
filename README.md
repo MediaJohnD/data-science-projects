@@ -29,10 +29,12 @@ flake8 src tests
 pytest -q
 ```
 
-## OptiReveal Pipeline
+## Prefect Orchestration
 
-This project implements a small demonstration of the OptiReveal workflow. The
-pipeline is orchestrated with **Prefect** and consists of the following stages:
+This project implements a small demonstration of the OptiReveal workflow using
+**Prefect** for orchestration. A minimal sample data set is bundled with the
+code so that the full pipeline can be executed without external dependencies.
+The flow consists of the following stages:
 
 1. **Ingest** – load raw visit events.
 2. **Feature Engineering** – aggregate visits into device level features.
@@ -47,6 +49,11 @@ Run the end-to-end flow locally:
 ```bash
 python src/pipeline.py
 ```
+
+## 📓 Notebook Walkthrough
+
+An end-to-end example of the pipeline can be found in
+[`full_pipeline_summary.ipynb`](full_pipeline_summary.ipynb).
 
 
 
