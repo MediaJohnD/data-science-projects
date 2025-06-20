@@ -48,11 +48,8 @@ def main_flow():
     model, acc = train(feats)
     log_metric(acc)
     triggers(feats)
-codex/audit-and-clean-mediajohnd/data-science-projects-repository
     app = deploy(model)
     return app
-    deploy(model)
-main
 
 
 if __name__ == "__main__":
