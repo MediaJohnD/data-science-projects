@@ -25,14 +25,28 @@ def run(path: Optional[str] = None) -> pd.DataFrame:
     """
 
     if path is None:
-        # Create a tiny example data set
-        return pd.DataFrame(
-            {
-                "device_id": ["A", "A", "B", "B", "C"],
-                "timestamp": pd.date_range("2023-01-01", periods=5, freq="h"),
-                "poi_id": [1, 2, 1, 3, 4],
-            }
-        )
+        # Create a small synthetic data set with multiple devices so that
+        # model evaluation techniques have enough samples.
+        frames = []
+        devices = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]
+        for device_id in devices:
+            frames.append(
+                pd.DataFrame(
+                    {
+                        "device_id": [device_id, device_id],
+                        "timestamp": pd.date_range(
+                            "2023-01-01", periods=2, freq="h"
+                        ),
+                        "poi_id": (
+                            [1, 2]
+                            if device_id not in {"J", "K", "L"}
+                            else [1, 1]
+                        ),
+                    }
+                )
+            )
+
+        return pd.concat(frames, ignore_index=True)
 
     csv_path = Path(path)
     if not csv_path.exists():

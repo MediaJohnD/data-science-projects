@@ -25,8 +25,9 @@ def train(features):
 
 
 @task
-def log_metric(acc):
-    log_run("training_accuracy", acc)
+def log_metrics(metrics):
+    for name, value in metrics.items():
+        log_run(name, value)
 
 
 @task
@@ -45,14 +46,11 @@ def main_flow():
     """Orchestrate ingestion, training and deployment tasks."""
     visits = ingest()
     feats = feature_engineering(visits)
-    model, acc = train(feats)
-    log_metric(acc)
+    model, metrics = train(feats)
+    log_metrics(metrics)
     triggers(feats)
-codex/audit-and-clean-mediajohnd/data-science-projects-repository
     app = deploy(model)
     return app
-    deploy(model)
-main
 
 
 if __name__ == "__main__":

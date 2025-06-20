@@ -13,3 +13,14 @@ The OptiReveal prototype is organised as a series of Prefect tasks executed by
 The system is intentionally lightweight and suitable for demonstration
 purposes. It can be extended with richer data sources and additional modeling
 techniques.
+
+```text
+CSV -> Ingestion -> Feature Engineering -> Modeling
+            |                         |
+            +----> Monitoring <-------+
+                      |
+                   FastAPI
+```
+
+The `full_pipeline_summary.ipynb` notebook provides screenshots and notes for
+each step.
