@@ -5,6 +5,9 @@
 
 This repository is hosted at [https://github.com/MediaJohnD/data-science-projects](https://github.com/MediaJohnD/data-science-projects).
 
+> **Note**
+> This project is still under active development and is **not** finalized for submission to the UT Austin or Georgia Tech data science programs.
+
 Clone the repository:
 
 ```bash
